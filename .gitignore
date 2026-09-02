@@ -1,0 +1,14 @@
+*.dat
+*.exe
+*.o
+.vscode/
+test.cpp
+test2
+test3
+index
+main
+*.gif
+*.png
+result_*/
+*.bin
+*.plt
