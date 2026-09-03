@@ -33,9 +33,11 @@ void center(std::vector <T> &t) {
         int Center = j;
         int Right = j + 1;
 
-        t.push_back( T(idx, Center, 1.0 + xi0 / Delta_THETA / Delta_THETA * (sin_j(j+0.5) + sin_j(j-0.5))) );
-        t.push_back( T(idx,  Right,     - xi0 / Delta_THETA / Delta_THETA * sin_j(j+0.5) ) );
-        t.push_back( T(idx,   Left,     - xi0 / Delta_THETA / Delta_THETA * sin_j(j-0.5)) );
+        double C1 = xi0 / EARTH_R / EARTH_R / sin_j(j) / Delta_THETA / Delta_THETA;
+
+        t.push_back( T(idx, Center, 1.0 + C1 * (sin_j(j+0.5) + sin_j(j-0.5))) );
+        t.push_back( T(idx,  Right,     - C1 * sin_j(j+0.5) ) );
+        t.push_back( T(idx,   Left,     - C1 * sin_j(j-0.5)) );
         count++;
     }
 }

@@ -17,8 +17,9 @@ void update_beta(double* b, double* Hphi_sum, double* Er_sum, double* hphi_sum, 
     /*通常領域*/
     for(int j=1; j < N_THETA - L; j++) {
         b[j]
-        = -xi0 / EARTH_R / EARTH_R / sin_j(j) / Delta_THETA * (
-            Hphi_sum[j] - Hphi_sum[j-1]
+        = -4.0 / EPS0 / s / EARTH_R / sin_j(j) / Delta_THETA * (
+            + sin_j(j+0.5) * Hphi_sum[j]
+            - sin_j(j-0.5) * Hphi_sum[j-1]
         )
         - 2.0 * Er_sum[j];
     }

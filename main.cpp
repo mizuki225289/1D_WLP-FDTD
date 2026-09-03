@@ -13,14 +13,11 @@
 #include "const_time.h"
 #include "const_sq.h"
 #include "const_region.h"
-#include "option.h"
 #include "r_theta.h"
 #include "PMLparameter.h"
 
 using Solver = Eigen::SparseLU < spmat, Eigen::COLAMDOrdering <int> >; /*LU分解*/
 std::string file_dir_name;
-
-SimulationOptions opt;
 
 int main(void) {
     time_t t;
@@ -138,6 +135,8 @@ int main(void) {
     for(int j=0; j < N_THETA+1; j++) {
         Er_sum[j] = 0;
         er_sum[j] = 0;
+    }
+    for(int j=0; j < N_THETA; j++) {
         Hphi_sum[j] = 0;
         hphi_sum[j] = 0;
     }
@@ -246,7 +245,16 @@ int main(void) {
         }
     }
     std::cout << "complete!" << std::endl;
-    deallocate_memory2d(Er_t);
+
+    /*各地点の時間波形*/
+    std::filesystem::create_directory(file_dir_name + "Er_j");
+    for(int j=0; j < N_THETA; j++) {
+        std::ofstream ofs_j(file_dir_name + "Er_j/j_" + std::to_string(j) + ".dat");
+        for(int t=0; t < Nt_output; t++) {
+            ofs_j << Delta_t_output * t * 1.0e3 << " " << Er_t[j][t] << std::endl;
+        }
+        ofs_j.close();
+    }
 
     /*観測点の時間波形計算*/
     double* obs_Et = new double [Nt_output];
@@ -272,6 +280,8 @@ int main(void) {
     delete [] Jt_array;
     delete [] Jq_array;
     delete [] beta;
+
+    deallocate_memory2d(Er_t);
 
     return 0;
 }

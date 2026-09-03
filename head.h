@@ -3,7 +3,6 @@
 
 #include </eigen-3.4.0/Eigen/Sparse>
 #include <ctime> 
-#include "option.h"
 
 using T = Eigen::Triplet <double>;
 using spmat = Eigen::SparseMatrix <double, Eigen::ColMajor>;
