@@ -15,11 +15,21 @@ void calc_er_q(double* er_q, double* er_sum, double* Er_q, double* Er_sum) {
     }
 }
 
-void calc_hphi_q(double* hphi_q, double* hphi_sum, double* Hphi_q, double* Hphi_sum) {
+void calc_hphi_q(double* hphi_q, double* Er_q, double* hphi_sum) {
     for(int j=0; j < N_THETA; j++) {
-        hphi_q[j] 
-            = (zeta_theta(j+0.5) / eta_theta(j+0.5)) * Hphi_q[j]
-            + (kappa_theta(j+0.5) * s / eta_theta(j+0.5)) * Hphi_sum[j]
-            - (s / eta_theta(j+0.5)) * hphi_sum[j];
+        hphi_q[j]
+            = b0 / EARTH_R / Delta_THETA * (
+                Er_q[j+1] - Er_q[j]
+            )
+            - 2.0 * hphi_sum[j];
     }
 }
+
+// void calc_hphi_q(double* hphi_q, double* hphi_sum, double* Hphi_q, double* Hphi_sum) {
+//     for(int j=0; j < N_THETA; j++) {
+//         hphi_q[j] 
+//             = (zeta_theta(j+0.5) / eta_theta(j+0.5)) * Hphi_q[j]
+//             + (kappa_theta(j+0.5) * s / eta_theta(j+0.5)) * Hphi_sum[j]
+//             - (s / eta_theta(j+0.5)) * hphi_sum[j];
+//     }
+// }

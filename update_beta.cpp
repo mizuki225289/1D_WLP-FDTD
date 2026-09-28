@@ -17,25 +17,38 @@ void update_beta(double* b, double* Hphi_sum, double* Er_sum, double* hphi_sum, 
     /*通常領域*/
     for(int j=1; j < N_THETA - L; j++) {
         b[j]
-        = -4.0 / EPS0 / s / EARTH_R / sin_j(j) / Delta_THETA * (
-            + sin_j(j+0.5) * Hphi_sum[j]
-            - sin_j(j-0.5) * Hphi_sum[j-1]
-        )
-        - 2.0 * Er_sum[j];
+            = -2.0 * Er_sum[j]
+            - a0 / EARTH_R / tan_j(j) * (Hphi_sum[j] + Hphi_sum[j-1])
+            - 2.0 *  a0 / EARTH_R / Delta_THETA * (
+                Hphi_sum[j] - Hphi_sum[j-1]
+            );
+        // = -4.0 / EPS0 / s / EARTH_R / sin_j(j) / Delta_THETA * (
+        //     + sin_j(j+0.5) * Hphi_sum[j]
+        //     - sin_j(j-0.5) * Hphi_sum[j-1]
+        // )
+        // - 2.0 * Er_sum[j];
     }
 
     /*PML領域*/
     for(int j = N_THETA - L; j < N_THETA; j++) {
         b[j] 
-        = xi_theta(j) * a0 / EARTH_R / sin_j(j) / Delta_THETA * (
-            + sin_j(j+0.5) * rho_theta(j+0.5) * hphi_sum[j]
-            - sin_j(j-0.5) * rho_theta(j-0.5) * hphi_sum[j-1]
-        ) - xi_theta(j) * a0 / EARTH_R / sin_j(j) / Delta_THETA * (
-            + sin_j(j+0.5) * tau_theta(j+0.5) * Hphi_sum[j]
-            - sin_j(j-0.5) * tau_theta(j-0.5) * Hphi_sum[j-1]
-        )
-        + rho_theta(j) * er_sum[j]
-        - tau_theta(j) * Er_sum[j];
+            = a0 * xi_theta(j) / EARTH_R / Delta_THETA * (
+                + ( rho_theta(j+0.5) * hphi_sum[j] - rho_theta(j-0.5) * hphi_sum[j-1])
+                - ( (kappa_theta(j+0.5) * s / zeta_theta(j+0.5)) * Hphi_sum[j] 
+                  - (kappa_theta(j-0.5) * s / zeta_theta(j-0.5)) * Hphi_sum[j-1] )
+            ) - a0 * xi_theta(j) / EARTH_R / tan_j(j) * (
+                hphi_sum[j] + hphi_sum[j-1]
+            ) - kappa_theta(j) * s / zeta_theta(j) * Er_sum[j]
+            + rho_theta(j) * er_sum[j];
+        // = xi_theta(j) * a0 / EARTH_R / sin_j(j) / Delta_THETA * (
+        //     + sin_j(j+0.5) * rho_theta(j+0.5) * hphi_sum[j]
+        //     - sin_j(j-0.5) * rho_theta(j-0.5) * hphi_sum[j-1]
+        // ) - xi_theta(j) * a0 / EARTH_R / sin_j(j) / Delta_THETA * (
+        //     + sin_j(j+0.5) * tau_theta(j+0.5) * Hphi_sum[j]
+        //     - sin_j(j-0.5) * tau_theta(j-0.5) * Hphi_sum[j-1]
+        // )
+        // + rho_theta(j) * er_sum[j]
+        // - tau_theta(j) * Er_sum[j];
     }
 
     /*右端 PEC j = N_THETA*/

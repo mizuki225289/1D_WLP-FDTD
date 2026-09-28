@@ -25,15 +25,15 @@ double sigma_theta(ValueType j) {
     }
 }
 
-template <typename ValueType>
-double beta_theta(ValueType j) {
-    return 1.0 / (sigma_theta(j) + s / 2.0);
-}
+// template <typename ValueType>
+// double beta_theta(ValueType j) {
+//     return 1.0 / (sigma_theta(j) + s / 2.0);
+// }
 
-template <typename ValueType>
-double gamma_theta(ValueType j) {
-    return (sigma_theta(j) + s / 2.0);
-}
+// template <typename ValueType>
+// double gamma_theta(ValueType j) {
+//     return (sigma_theta(j) + s / 2.0);
+// }
 
 template <typename ValueType>
 double kappa_theta(ValueType j) {
@@ -65,9 +65,9 @@ double rho_theta(ValueType j) {
     return (s - 2.0 * eta_theta(j)) / zeta_theta(j);
 }
 
-template <typename ValueType>
-double tau_theta(ValueType j) {
-    return kappa_theta(j) * s / zeta_theta(j);
-}
+// template <typename ValueType>
+// double tau_theta(ValueType j) {
+//     return kappa_theta(j) * s / zeta_theta(j);
+// }
 
 #endif

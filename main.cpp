@@ -194,12 +194,12 @@ int main(void) {
             Er_q[j] = x[j];
         }
 
-        /*Hphi_q, H_phir_q, H_phitheta_q 計算*/
-        calc_Hphi(Hphi_q, Er_q, Hphi_sum, hphi_sum);
-
-        /*e_theta*/
+        /*hphi_q, er_q*/
+        calc_hphi_q(hphi_q, Er_q, hphi_sum);
         calc_er_q(er_q, er_sum, Er_q, Er_sum);
-        calc_hphi_q(hphi_q, hphi_sum, Hphi_q, Hphi_sum);
+
+        /*Hphi_q, H_phir_q, H_phitheta_q 計算*/
+        calc_Hphi(Hphi_q, Er_q, Hphi_sum, hphi_q, hphi_sum);
 
         /*sum 更新*/
         update_sum_r(Er_q, Er_sum);

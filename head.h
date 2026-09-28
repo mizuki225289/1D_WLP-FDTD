@@ -18,10 +18,12 @@ void calcWLPcoef(double* coef, double* array, double** Laguerre);
 
 /*calc_eh.cpp*/
 void calc_er_q(double* er_q, double* er_sum, double* Er_q, double* Er_sum);
-void calc_hphi_q(double* hphi_q, double* hphi_sum, double* Hphi_q, double* Hphi_sum);
+void calc_hphi_q(double* hphi_q, double* Er_q, double* hphi_sum);
+// void calc_hphi_q(double* hphi_q, double* hphi_sum, double* Hphi_q, double* Hphi_sum);
 
 /*calcH.cpp*/
-void calc_Hphi(double* Hphi_q, double* Er_q, double* Hphi_sum, double* hphi_sum);
+void calc_Hphi(double* Hphi_q, double* Er_q, double* Hphi_sum, double* hphi_q, double* hphi_sum);
+// void calc_Hphi(double* Hphi_q, double* Er_q, double* Hphi_sum, double* hphi_sum);
 
 /*composeMatA.cpp*/
 void composeMatA (std::vector <T> &t);

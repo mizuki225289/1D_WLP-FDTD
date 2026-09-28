@@ -15,4 +15,8 @@ double sin_j(ValueType j) {
     return sin(Delta_THETA * j);
 }
 
+template <typename ValueType>
+double tan_j(ValueType j) {
+    return tan(Delta_THETA * j);
+}
 #endif

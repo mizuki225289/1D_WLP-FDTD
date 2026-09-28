@@ -33,11 +33,15 @@ void center(std::vector <T> &t) {
         int Center = j;
         int Right = j + 1;
 
-        double C1 = xi0 / EARTH_R / EARTH_R / sin_j(j) / Delta_THETA / Delta_THETA;
+        double C1 = xi0 / EARTH_R / EARTH_R / Delta_THETA / Delta_THETA;
+        double C2 = xi0 / EARTH_R / EARTH_R / tan_j(j) / 2.0 / Delta_THETA;
 
-        t.push_back( T(idx, Center, 1.0 + C1 * (sin_j(j+0.5) + sin_j(j-0.5))) );
-        t.push_back( T(idx,  Right,     - C1 * sin_j(j+0.5) ) );
-        t.push_back( T(idx,   Left,     - C1 * sin_j(j-0.5)) );
+        t.push_back( T(idx, Center, 1.0 + 2.0 * C1));
+        t.push_back( T(idx,  Right, - C2 - C1));
+        t.push_back( T(idx,   Left, + C2 - C1));
+        // t.push_back( T(idx, Center, 1.0 + C1 * (sin_j(j+0.5) + sin_j(j-0.5))) );
+        // t.push_back( T(idx,  Right,     - C1 * sin_j(j+0.5) ) );
+        // t.push_back( T(idx,   Left,     - C1 * sin_j(j-0.5)) );
         count++;
     }
 }
@@ -50,11 +54,12 @@ void PML(std::vector <T> &t) {
         int Center = j;
         int Right = j + 1;
 
-        double C1 = xi_theta(j) * xi0 / EARTH_R / EARTH_R / sin_j(j) / Delta_THETA / Delta_THETA;
+        double C1 = xi_theta(j) * xi0 / EARTH_R / EARTH_R / Delta_THETA / Delta_THETA;
+        double C2 = xi_theta(j) * xi0 / EARTH_R / EARTH_R / tan_j(j) / 2.0 / Delta_THETA;
 
-        t.push_back( T(idx, Center, 1.0 + C1 * (sin_j(j+0.5) * xi_theta(j+0.5) + sin_j(j-0.5) * xi_theta(j-0.5)) ) );
-        t.push_back( T(idx,  Right,     - C1 * sin_j(j+0.5) * xi_theta(j+0.5) ) );
-        t.push_back( T(idx,   Left,     - C1 * sin_j(j-0.5) * xi_theta(j-0.5)) );
+        t.push_back( T(idx, Center, 1.0 + C1 * (xi_theta(j+0.5) + xi_theta(j-0.5))  ) );
+        t.push_back( T(idx,  Right, - C1 * xi_theta(j+0.5) - C2 ) );
+        t.push_back( T(idx,   Left, - C1 * xi_theta(j-0.5) + C2 ) );
         count++;
     }
 }
