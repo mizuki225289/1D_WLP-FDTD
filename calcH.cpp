@@ -16,7 +16,7 @@ void calc_Hphi(double* Hphi_q, double* Er_q, double* Hphi_sum, double* hphi_q, d
         Hphi_q[j]
             = (eta_theta(j+0.5) / zeta_theta(j+0.5)) * hphi_q[j]
             + (s / zeta_theta(j+0.5)) * hphi_sum[j]
-            - (kappa_theta(j+0.5) * s / zeta_theta(j)) * Hphi_sum[j];
+            - (kappa_theta(j+0.5) * s / zeta_theta(j+0.5)) * Hphi_sum[j];
 
         // Hphi_q[j]
         //     = xi_theta(j+0.5) * b0 / EARTH_R / Delta_THETA * (Er_q[j+1] - Er_q[j])

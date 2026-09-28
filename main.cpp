@@ -40,8 +40,8 @@ int main(void) {
     /*Laguerre作成*/
     std::cout << "Make Laguerre" << std::endl;
     start = std::chrono::system_clock::now();
-        double** Laguerre_pulse = allocate_memory2d(q_MAX, Nt_pulse, 0.0); //電流パルス用の時間幅が細かいWLP
-        makeLaguerreMat(Laguerre_pulse, Delta_t_pulse, Nt_pulse);
+        double** Laguerre_pulse = allocate_memory2d(q_MAX, Nt_pulse + 1, 0.0); //電流パルス用の時間幅が細かいWLP
+        makeLaguerreMat(Laguerre_pulse, Delta_t_pulse, Nt_pulse + 1);
         // output_Laguerre(Laguerre_pulse, Delta_t_pulse, Nt_pulse, "Laguerre_pulse");
 
         double** Laguerre_output = allocate_memory2d(q_MAX, Nt_output, 0.0); //時間波形出力用の時間幅が大きいWLP
@@ -55,8 +55,8 @@ int main(void) {
     int input_index = 0;
 
     /*Jt_array作成*/
-    double* Jt_array = new double [Nt_pulse];
-    for(int i=0; i < Nt_pulse; i++) {
+    double* Jt_array = new double [Nt_pulse + 1];
+    for(int i=0; i < Nt_pulse + 1; i++) {
         Jt_array[i] = Jr(i * Delta_t_pulse);
     }
     double* Jq_array = new double [q_MAX];
@@ -230,7 +230,7 @@ int main(void) {
     }
     end = std::chrono::system_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::milliseconds> (end - start).count();
-    std::cout << "Main loop comp.  elapsed = " << elapsed << " msec. = " << elapsed / 60.0 << "sec." << std::endl;
+    std::cout << "Main loop comp.  elapsed = " << elapsed << " msec. = " << elapsed / 1000.0 << "sec." << std::endl;
     std::cout << elapsed / q_MAX << " msec. per once loop." << std::endl;
 
     /*アニメーション作成用*/

@@ -1,7 +1,7 @@
 #include "const.h"
 #include "const_sq.h"
 #include "const_region.h"
-#include "PMLParameter.h"
+#include "PMLparameter.h"
 #include "head.h"
 #include "r_theta.h"
 
